@@ -1,1 +1,1 @@
-# SimpleWarehouse
+简易的仓储系统，包含arduino控制的电子秤，I2C通信传递重量变化信息，支持OLED显示，RFID读卡，RC505远程读卡
