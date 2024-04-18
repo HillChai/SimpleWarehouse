@@ -1,0 +1,21 @@
+#include <Wire.h>
+
+const byte DEVICE_ADDRESS = 0; // 主设备地址
+const int NUM_DEVICES = 10; // 从设备数量
+
+void setup() {
+  Wire.begin(DEVICE_ADDRESS);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // 按照顺序轮询每个从设备
+  for (int i = 8; i <= NUM_DEVICES+8; i++) {
+    Wire.requestFrom(i, 1);
+    while (Wire.available()) {
+      int data = Wire.read();
+      Serial.println(data);
+    }
+    delay(100); // 等待一段时间
+  }
+}

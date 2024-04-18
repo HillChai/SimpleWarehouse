@@ -1,0 +1,24 @@
+// 引入Wire库文件
+#include <Wire.h>
+ 
+void setup()
+{
+    // Wire初始化, 并以从设备地址#8的身份加入i2c总线
+    Wire.begin(8);
+    // 注册请求响应事件
+    Wire.onRequest(requestEvent);
+}
+ 
+void loop()
+{
+    delay(100);
+}
+ 
+// 每当接收到来自主机的数据时执行的事件函数
+// 此函数被注册为事件，调用请见setup（）
+void requestEvent()
+{
+    // 用6个字节的消息进行响应
+    Wire.write("hello ");
+    // 以此回应主设备的请求
+}

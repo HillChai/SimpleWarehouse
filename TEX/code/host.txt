@@ -1,0 +1,55 @@
+const byte DEVICE_ADDRESS = 0; //    主设备地址
+
+void setup()
+{
+  Wire.begin(DEVICE_ADDRESS);//    开启I2C总线
+  Wire.onReceive(receiveEvent);//    注册接收消息事件
+}
+//    接收箱子的位置信息，物品的种类和数量，并显示在对应的OLED屏上   
+void receiveEvent(int howMany)
+{
+  char x;//    初始化向上位机传输的数据
+  char type[2] = {'\0','\0'};//    初始化物品种类
+  //    接收种类的第一位数据
+  while (Wire.available()>13)
+  {
+    x = Wire.read();
+    Serial.print(x);
+    type[0] = Wire.read();  
+  }
+  //    接收种类的第二位数据
+  while (Wire.available()>12)
+  {
+    x = Wire.read();
+    Serial.print(x);
+    type[1] = Wire.read();  
+  }
+  //    接收位置
+  int position = 0;//    初始化箱子位置
+  int Nposition = 1;//    初始化箱子位置系数（要接收2位，因此从10的1次方开始）
+  while (Wire.available()>10)
+  {
+    x = Wire.read();
+    Serial.print(x);
+    position = position + int(x-48)*pow(10,Nposition);  //    将字符串转换成整数
+    Nnumber--;
+  }
+  Serial.print(":");
+  //    接收数量
+  int number = 0;//    初始化物品数量
+  int Nnumber = 3;//    初始化物品数量系数（要接收4位，因此从10的3次方开始）
+  while (Wire.available()>6)
+  {
+    x = Wire.read();
+    Serial.print(x); 
+    number = number + int(x-48)*pow(10,Nnumber);//    将字符串转换成整数
+    Nweight--;
+  }
+  //    接收重量
+  while (Wire.available())
+  {
+    x = Wire.read();
+    Serial.print(x); 
+  }
+  Serial.println(); 
+}

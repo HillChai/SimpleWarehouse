@@ -1,0 +1,6 @@
+void requestEvent()
+{
+    // 用n个字节的消息进行响应
+    Wire.write();
+    // 以此回应主设备的请求
+}

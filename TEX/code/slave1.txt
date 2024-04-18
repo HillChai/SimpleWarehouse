@@ -1,0 +1,21 @@
+const byte DEVICE_ADDRESS = 8; //    从设备地址
+extern char Transmission_Information[20];//    初始化发送给主设备的数据
+long oldNumber = 0;//    初始化缓存物品数量
+long newNumber = 0;//    初始化物品数量
+
+void setup() {
+  Wire.begin(DEVICE_ADDRESS);//    开启I2C总线
+}
+
+//   向主机发送消息
+void loop() {
+  //   当数量发生变化时发送
+  if (oldNumber!=newNumber) {
+    calChar(DEVICE_ADDRESS,newNumber,Weight);
+    Wire.beginTransmission(0); //   发送给主设备
+    Wire.write(Transmission_Information); //   发送物品种类、箱子位置、物品数量、物品重量
+    Wire.endTransmission();//   结束通信
+    oldNumber = newNumber;//   更新缓存数量
+  }
+  delay(500);
+}

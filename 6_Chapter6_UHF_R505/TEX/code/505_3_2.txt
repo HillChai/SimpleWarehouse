@@ -1,0 +1,26 @@
+void loop() {
+  //适当的延迟使得软串口可以将接收到的信息均处理完
+  delay(100);
+  char choice = Serial.read();
+  if(choice == '1')
+  {
+      WIFISerial.write(MulitEPC,sizeof(MulitEPC));
+	//返回消息的第二个字节位输入指令的第二个字节，需要作为参数输入
+	getMessage(MulitEPC[1]);
+  }
+  else if(choice == '2')
+  {
+	WIFISerial.write(Read_1EPC_1_7,sizeof(Read_1EPC_1_7));
+	//返回消息的第二个字节位输入指令的第二个字节，需要作为参数输入
+	getMessage(Read_1EPC_1_7[1]);
+  }
+  else if(choice == '3')
+  {
+	WIFISerial.write(SelectCard,sizeof(SelectCard));
+	WIFISerial.write(WriteEPC,sizeof(WriteEPC));
+	//返回消息的第二个字节位输入指令的第二个字节，需要作为参数输入
+	getMessage(WriteEPC[1]);
+  }
+  ......
+  ......
+}

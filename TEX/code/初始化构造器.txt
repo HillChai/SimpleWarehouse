@@ -1,0 +1,2 @@
+Adafruit_SSD1306(uint8_t w, uint8_t h, TwoWire *twi=&Wire, int8_t rst_pin=-1,
+    uint32_t clkDuring=400000UL, uint32_t clkAfter=100000UL);

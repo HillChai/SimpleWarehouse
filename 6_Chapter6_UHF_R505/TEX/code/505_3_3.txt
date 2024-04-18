@@ -1,0 +1,8 @@
+//同时读取多张卡的指令
+unsigned char MulitEPC[] = {0X0A,0X55,0X2C,0X52,0X31,0X2C,0X31,0X2C,0X37,0X0D};
+//读取单张卡起始地址为1读取长度为7*4的指令
+unsigned char Read_1EPC[] = {0X0A,0X52,0X31,0X2C,0X31,0X2C,0X37,0X0D};
+//选择最后四个字节为5555的卡的指令
+unsigned char SelectCard[] = {0X0A,0X54,0X31,0X2C,0X37,0X30,0X2C,0X31,0X30,0X2C,0X35,0X35,0X35,0X35,0X0D};
+//向卡内从起始地址为2长度为4*1的地方写入8888
+unsigned char WriteEPC[] = {0X0A,0X57,0X31,0X2C,0X32,0X2C,0X31,0X2C,0X39,0X39,0X39,0X39,0X0D};

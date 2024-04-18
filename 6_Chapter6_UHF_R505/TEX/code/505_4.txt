@@ -1,0 +1,54 @@
+void getMessage(char mark)
+{
+
+
+  int start1 = 0;
+  int start2 = 0;
+  int end1 = 0;
+  int end2 = 0;
+  int count = 0;
+  while(WIFISerial.available() > 0)
+  {  
+    //获取串口接收到的数据
+    incomedate = WIFISerial.read();
+    //当读取到第一个字节为LF，第二个字节为输入指令的第二个字节时卡的内容开始读取
+    if(start1 == 0 && incomedate == LF){
+      start1 = 1;
+      continue;
+    }
+    if(start1 == 1 && start2 == 0 && incomedate == mark){
+      start2 = 1;
+      continue;
+    }
+    //结尾标志CR和LF
+    if(start1 == 1 && start2 == 1 && end1 == 0 && incomedate != CR){
+      subMessage.push_back(incomedate);    
+      count++; 
+      continue;
+    }else if(start1 == 1 && start2 == 1 && end1 == 0 && incomedate == CR){
+      end1 = 1;
+      continue;
+    }
+    if(incomedate != LF){
+      end1 = 0;
+      subMessage.push_back(CR);
+      subMessage.push_back(incomedate);
+      count++;
+      count++;
+    }else{
+	//判断是否读取到完整卡的信息
+      if(count == arrayMax){
+        message.push_back(subMessage);
+        lock = 1;  
+        return ;
+      }
+	//初始化各种标志
+      subMessage.clear();
+      start1 = 0;
+      start2 = 0;
+      end1 = 0;
+      end2 = 0;
+      count = 0;
+    }
+  }
+}

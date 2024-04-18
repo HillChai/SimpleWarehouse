@@ -1,0 +1,9 @@
+......
+#include <Vector.h>
+#include <Array.h>
+#define LF 0X0A
+#define CR 0X0D
+const int arrayMax =36;
+Vector<Array<char,arrayMax>> message;
+Array<char,arrayMax> subMessage;
+unsigned char incomedate = 0;

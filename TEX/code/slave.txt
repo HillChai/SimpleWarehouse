@@ -1,0 +1,74 @@
+const byte DEVICE_ADDRESS = 8; //    从设备地址
+extern char Transmission_Information[20];//    初始化发送给主设备的数据
+long oldNumber = 0;//    初始化缓存物品数量
+long newNumber = 0;//    初始化物品数量
+extern long Single_Weight;//    初始化单个物品重量
+void setup() {
+  Wire.begin(DEVICE_ADDRESS);//    开启I2C总线
+  Wire.onReceive(receiveEvent);//    注册接收消息事件
+}
+
+//   向主机发送消息
+void loop() {
+  byte state = read(mfrc522);//    读卡器获得物品单个重量
+  Weight = Get_Weight();//    计算放在传感器上的重物重量
+  //    当重量为负数时，重启板子
+  if(Weight < Negative_Lower_Limit)
+  {
+    resetFunc();
+  }
+  newNumber = (long)((float)Weight/Single_Weight);//    通过物品重量和单个重量计算出物品数量
+  //   当数量发生变化时发送
+  if (oldNumber!=newNumber) {
+    //    将物品种类、箱子位置、物品数量、物品重量数据转化成字符串格式
+    //   AB          12           0056      002800 
+    //   物品种类 设备地址 物品数量 物品重量 
+    calChar(DEVICE_ADDRESS,newNumber,Weight);
+    Wire.beginTransmission(0); //   发送给主设备
+    Wire.write(Transmission_Information); //   发送物品种类、箱子位置、物品数量、物品重量
+    Wire.endTransmission();//   结束通信
+    oldNumber = newNumber;//   更新缓存数量
+  }
+  delay(500);
+}
+
+//   接收主机消息
+void receiveEvent(int howMany)
+{
+  char Received_Data[5];
+  char x;
+
+  //   接收位置信息
+  while (Wire.available()>4)
+  {
+    x = Wire.read();  
+  }
+  byte k = 0;
+  
+  //   先判断种类，如果种类相同则箱子层数增加，种类则不同报警
+  while (Wire.available())
+  {
+    Received_Data[k] = Wire.read();
+    ++k;  
+  } 
+
+  if(Received_Data[0] == 48) 
+  {
+    byte l=0;
+    for(byte i=1;i<k;++i)
+    {
+      l = l*10 + Received_Data[i];
+    }
+    Layes = l;
+
+  }
+  else if(Received_Data[0] == 49)
+  {
+    // 类型不对报警
+  }
+  else if(Received_Data[0] == 50)
+  {
+    resetFunc();
+  }
+  
+}

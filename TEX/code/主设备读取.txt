@@ -1,0 +1,27 @@
+// 引入Wire库文件
+#include <Wire.h>
+ 
+void setup()
+{
+    // Wire初始化, 加入i2c总线
+    // 如果未指定，则以主机身份加入总线。
+    Wire.begin();
+    // 初始化串口并设置波特率为9600
+    Serial.begin(9600);
+}
+ 
+void loop()
+{
+    // 向从设备＃8请求6个字节
+    Wire.requestFrom(8, 6);
+    // 当从从设备接收到信息时值为true
+    while (Wire.available())
+    {
+        // 接受并读取从设备发来的一个字节的数据
+        char c = Wire.read();
+        // 向串口打印该字节
+        Serial.print(c);
+    }
+    // 延时500毫秒
+    delay(500);
+}

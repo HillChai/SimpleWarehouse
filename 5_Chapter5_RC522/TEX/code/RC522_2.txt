@@ -1,0 +1,30 @@
+void loop() {
+  choice = Serial.read();
+  if(choice == '1')
+  {
+    Serial.println("Read the card");
+    //直到完成一张卡被读取
+    while(1)
+    {
+      bool state = read();
+      if(state==1)
+        break;
+    }
+    Serial.println("1.Read card \n2.Write to card \n3. ... \n");
+  }
+  else if(choice == '2')
+  {
+    Serial.println("Write the card");
+    //直到完成一张卡的写入
+    {
+      bool state = write();
+      if(state==1)
+        break;
+    }
+    Serial.println("1.Read card \n2.Write to card \n3. ... \n");
+  }
+  else if(choice == '3')
+  {
+    //其余选择接口
+  }
+}

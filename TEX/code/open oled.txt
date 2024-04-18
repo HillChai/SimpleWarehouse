@@ -1,0 +1,13 @@
+  //    控制OLED I2C开关
+  TCA9548A(position);//    开启对应OLED屏的I2C通信
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  //    初始化屏幕设置
+  display.clearDisplay();  
+  display.setTextSize(4);  
+  display.setTextColor(WHITE);  
+  display.setCursor(45, 10); 
+  display.print("type:");   
+  display.print(type[0]);  //    显示种类
+  display.println(type[1]); 
+  display.print("number"); //    显示数量
+  display.println(number);     
+  display.display();  
