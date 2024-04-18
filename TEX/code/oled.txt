@@ -1,0 +1,11 @@
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  
+  display.clearDisplay();  
+  display.setTextSize(4);  
+  display.setTextColor(WHITE);  
+  display.setCursor(45, 10); 
+  display.print("type:");   
+  display.print(type[0]); 
+  display.println(type[1]); 
+  display.print("number");
+  display.println(number);     
+  display.display();  

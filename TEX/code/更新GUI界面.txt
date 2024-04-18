@@ -1,0 +1,12 @@
+# 更新模块信息字典中对应模块的数量和种类
+        for i in range(module_num):
+            if module_info[i]['type'] == type_:
+                module_info[i]['num'] = num
+                num_label = self.findChild(QLabel, f'label_num_{i}')
+                type_label = self.findChild(QLabel, f'label_type_{i}')
+                if num_label is None:
+                    print(f"label_num_{module_num} not found!")
+                    return
+
+                num_label.setText(num)
+                break

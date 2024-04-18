@@ -1,0 +1,5 @@
+boolean Adafruit_SSD1306::begin(
+      uint8_t switchvcc=SSD1306_SWITCHCAPVCC, 
+	  uint8_t i2caddr=0, 
+	  boolean reset=true,
+      boolean periphBegin=true)

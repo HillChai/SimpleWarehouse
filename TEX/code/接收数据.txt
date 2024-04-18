@@ -1,0 +1,7 @@
+while (Wire.available())
+    {
+        // 接受并读取从设备发来的一个字节的数据
+        char c = Wire.read();
+        // 向串口打印该字节
+        Serial.print(c);
+    }

@@ -1,0 +1,6 @@
+# 创建串口监视器
+        self.serial = QSerialPort()
+        self.serial.setPortName("COM3")  # 设置端口号
+        self.serial.setBaudRate(QSerialPort.Baud9600)
+        self.serial.readyRead.connect(self.handle_serial_data)
+        self.serial.open(QIODevice.ReadWrite)

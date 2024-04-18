@@ -1,0 +1,2 @@
+const byte DEVICE_ADDRESS = 8; // 从设备地址（8~127）
+Wire.beginTransmission(DEVICE_ADDRESS);

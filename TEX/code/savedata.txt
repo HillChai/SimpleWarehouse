@@ -1,0 +1,17 @@
+ def save_data(self, location, type, num):
+        with open("blocks.json", "r") as f:
+            blocks = json.load(f)
+        print(blocks)
+        for block in blocks:
+            if block['BlockID'] == location:
+                blocks.remove(block)
+        block = {
+            'BlockID': location,
+            'BlockType': type,
+            'BlockQuantity': num,
+        }
+        blocks.append(block)
+        print(blocks)
+        # 保存为json文件
+        with open('blocks.json', 'w') as f:
+            json.dump(blocks, f, indent=4)

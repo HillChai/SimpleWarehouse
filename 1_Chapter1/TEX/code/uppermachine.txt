@@ -1,0 +1,57 @@
+import serial  # 导入模块
+import re
+import matplotlib.pyplot as plt
+import numpy as np
+
+weights = []
+realweights = []
+def read_serial_data(port):
+    ser = serial.Serial(port, 9600, timeout=1)
+    n = int(input("数组长度:"))
+    while 1:
+        user_input = input("请输入一个数字(输入'q'退出):")
+
+        if user_input.lower() == 'q':
+            break
+
+        try:
+            ser.write(user_input.encode())
+            while 1:
+                data = ser.readline().decode('utf-8')
+                if data:
+                    break
+            number = re.findall("\d+", data)
+            if number and number[0] != '0':
+                print(number[0])
+                weights.append(int(number[0]))
+                realweights.append(int(user_input))
+            if len(weights) == n:
+                print(weights)
+                print(realweights)
+                break
+
+        except ValueError:
+            print("输入无效, 请输入一个有效的数字! ")
+    ser.close()
+
+read_serial_data("/dev/ttyUSB0")
+
+k1 = 0
+k2 = 0
+n = len(realweights)
+for i in range(n):
+    k1 += realweights[i] * weights[i]
+    k2 += realweights[i] * realweights[i]
+mean1 = sum(realweights) / n
+mean2 = sum(weights) / n
+k = (k1 - n * mean1 * mean2) / (k2 - n * mean1 * mean1)
+b = mean2 - mean1 * k
+print(k, b)
+x = np.linspace(500, 600, 1000)
+y = k*x+b
+
+plt.plot(x, y)
+plt.scatter(realweights, weights)
+plt.xlabel('realweights')
+plt.ylabel('weights')
+plt.show()

@@ -1,0 +1,24 @@
+    def handle_serial_data(self):
+        # 读取串口数据
+        data = self.serial.readAll().data()
+        data_str = str(data, encoding='utf-8')
+        print(data)
+        # print(self.UHF_dict)
+        # 处理数据
+        module_data = data_str.split(',')
+        for i, module_str in enumerate(module_data):
+            # 如果模块数据不为空，则更新数量和种类
+            # self.serial.write(('88888').encode('utf-8'))
+            module_str = module_str.strip('\n\r')
+            if module_str:
+                try:
+                    # print(len(module_str))
+                    type_, position,num = module_str.split(':')
+                    # self.save_data(position, type_, num)
+                    if(len(module_str)==10):
+                        self.read_UHF(type_, position,num)
+                        self.update_module_info(i, type_, num)
+                        self.save_data(position, type_, num)
+                except ValueError as e:
+                    # print(f"Error: {e}. Received data: {module_str}")
+                    i = 0

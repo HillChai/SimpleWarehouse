@@ -1,0 +1,91 @@
+//   将物品种类、数量、重量及从设备地址转换成字符串
+//   AB          12           0056      002800 
+//   物品种类 设备地址 物品数量 物品重量 
+void transform::pack()
+{
+  //   在第一第二位存入物品种类
+  Transmission_Information[0] = Type_Name[0];
+  Transmission_Information[1] = Type_Name[1];
+  //   在第三第四位存入设备地址
+  if (DEVICE_ADDRESS < 10)
+  //   编号只有一位数时，第一位为字符串0，将第二位数字转换为字符串
+  {
+      Transmission_Information[2] = 0 + 48;
+      Transmission_Information[3] = DEVICE_ADDRESS + 48;
+  }
+  else
+  //   编号两位数时，将第一位和第二位数字分别转换为字符串
+  {
+      Transmission_Information[2] = DEVICE_ADDRESS / 10 + 48;
+      Transmission_Information[3] = DEVICE_ADDRESS % 10 + 48;
+  }
+  //   在第五到八位存入设备地址
+  //   物品数量小于0时，输出0000
+  if (Number < 0)
+  {
+      Number = -Number;
+      Transmission_Information[4] = 48;
+      Transmission_Information[5] = 48;
+      Transmission_Information[6] = 48;
+      Transmission_Information[7] = 48;
+  }
+  else
+  //   将四位数字分别转换为字符串
+  {
+      byte k = 4;
+      while (Number / 10 > 0)
+      {
+          Transmission_Information[k] = (Number % 10) + 48;
+          Number = Number / 10;
+          ++k;
+      }
+      for (int i = k; i < NumberEnd; ++i)
+      {
+          Transmission_Information[i] = 48;
+      }
+      Transmission_Information[k] = Number + 48;
+      byte num = 4;
+      for (int j = num; j < (NumberEnd -3)/2+4; ++j)
+      {
+          char m = Transmission_Information[j];
+          Transmission_Information[j] = Transmission_Information[NumberEnd-1 - j + num];
+          Transmission_Information[NumberEnd-1 - j + num] = m;
+      }
+  }
+  //   在第九到十四位存入物品重量
+  //   物品重量小于0时，输出000000
+  if (Weight < 0)
+  {
+      Weight = -Weight;
+      Transmission_Information[8] = 48;
+      Transmission_Information[9] = 48;
+      Transmission_Information[10] = 48;
+      Transmission_Information[11] = 48;
+      Transmission_Information[12] = 48;
+      Transmission_Information[13] = 48;
+  }
+  //   将六位数字分别转换为字符串
+  else
+  {
+      byte k = NumberEnd;
+      while (Weight / 10 > 0)
+      {
+          Transmission_Information[k] = (Weight % 10) + 48;
+          Weight = Weight / 10;
+          ++k;
+      }
+      for (int i = k; i < WeightEnd; ++i)
+      {
+          Transmission_Information[i] = 48;
+      }
+      Transmission_Information[k] = Weight + 48;
+      byte num = NumberEnd;
+      for (int j = num; j < (WeightEnd - NumberEnd) / 2 + NumberEnd; ++j)
+      {
+          char m = Transmission_Information[j];
+          Transmission_Information[j] = Transmission_Information[WeightEnd-1 - j + num];
+          Transmission_Information[WeightEnd-1 - j + num] = m;
+      }
+  }
+  Transmission_Information[WeightEnd] = '\0';  
+}

@@ -1,0 +1,384 @@
+% \documentclass[a4paper, 11pt]{article}
+\documentclass{article}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[unicode]{hyperref}
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{tabularx}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=1.5cm}
+
+% \lstset{
+%   language=C++,
+%   basicstyle=\fontsize{8}{5}\ttfamily, % 设置代码字体大小为 12pt
+%   breaklines=true, % 自动换行
+%   numbers=left,
+%   showstringspaces = false
+% }
+
+%%%%%% 设置字号 %%%%%% 
+\newcommand{\chuhao}{\fontsize{nn42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochuhao}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoerhao}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+
+% %%%% 设置 section 属性 %%%%
+% \makeatletter
+% \renewcommand\section{\@startsection{section}{1}{\z@}%
+% {-1.5ex \@plus -.5ex \@minus -.2ex}%
+% {.5ex \@plus .1ex}%
+% {\normalfont\sihao\CJKfamily{hei}}}
+% \makeatother
+
+ %%%% 设置 subsection 属性 %%%%
+% \makeatletter
+% \renewcommand\subsection{\@startsection{subsection}{1}{\z@}%
+% % {-1.25ex \@plus -.5ex \@minus -.2ex}%
+% % {-1ex \@plus -.5ex \@minus -.2ex}%
+% {-1ex \@plus -.3ex \@minus -.1ex}%
+% {.4ex \@plus .1ex}%
+% {\normalfont\xiaosihao\CJKfamily{hei}}}
+% \makeatother
+
+% %%%% 设置 subsubsection 属性 %%%%
+% \makeatletter
+% \renewcommand\subsubsection{\@startsection{subsubsection}{1}{\z@}%
+% {-1ex \@plus -.5ex \@minus -.2ex}%
+% {.3ex \@plus .1ex}%
+% {\normalfont\xiaosihao\CJKfamily{hei}}}
+% \makeatother
+
+%%%% 段落首行缩进两个字 %%%%
+\makeatletter
+\let\@afterindentfalse\@afterindenttrue
+\@afterindenttrue
+\makeatother
+% \setlength{\parindent}{2em}  %中文缩进两个汉字位
+
+%%%% 下面的命令重定义页面边距，使其符合中文刊物习惯 %%%%
+% \addtolength{\topmargin}{-54pt}
+% \setlength{\oddsidemargin}{0.63cm}  % 3.17cm - 1 inch
+% \setlength{\evensidemargin}{\oddsidemargin}
+% \setlength{\textwidth}{14.66cm}
+% \setlength{\textheight}{24.00cm}    % 24.62
+
+%%%% 下面的命令设置行间距与段落间距 %%%%
+\linespread{1.0}
+% \setlength{\parskip}{1ex}
+\setlength{\parskip}{0.5\baselineskip}
+
+% 在导言区进行样式设置
+\lstset{
+    language=C++, % 设置语言
+ 	basicstyle=\ttfamily, % 设置字体族
+ 	breaklines=true, % 自动换行
+ 	keywordstyle=\bfseries\color{NavyBlue}, % 设置关键字为粗体，颜色为 NavyBlue
+ 	morekeywords={PressureSensor, Button, Oled}, % 设置更多的关键字，用逗号分隔
+ 	emph={self}, % 指定强调词，如果有多个，用逗号隔开
+    emphstyle=\bfseries\color{Rhodamine}, % 强调词样式设置
+    commentstyle=\itshape\color{black!50!white}, % 设置注释样式，斜体，浅灰色
+    stringstyle=\bfseries\color{PineGreen!90!black}, % 设置字符串样式
+    columns=flexible,
+    numbers=left, % 显示行号在左边
+    numbersep=2em, % 设置行号的具体位置
+    numberstyle=\footnotesize, % 缩小行号
+    % frame=single, % 边框
+	tabsize = 4,  %行缩进
+    framesep=1em % 设置代码与边框的距离
+}
+
+%%%% 正文开始 %%%%
+\begin{document}	
+		%%%% 定理类环境的定义 %%%%
+\newtheorem{example}{例}             % 整体编号
+\newtheorem{algorithm}{算法}
+\newtheorem{theorem}{定理}[section]  % 按 section 编号
+\newtheorem{definition}{定义}
+\newtheorem{axiom}{公理}
+\newtheorem{property}{性质}
+\newtheorem{proposition}{命题}
+\newtheorem{lemma}{引理}
+\newtheorem{corollary}{推论}
+\newtheorem{remark}{注解}
+\newtheorem{condition}{条件}
+\newtheorem{conclusion}{结论}
+\newtheorem{assumption}{假设}
+
+		%%%% 重定义 %%%%
+\renewcommand{\contentsname}{目录}  % 将Contents改为目录
+\renewcommand{\abstractname}{摘要}  % 将Abstract改为摘要
+\renewcommand{\refname}{参考文献}   % 将References改为参考文献
+\renewcommand{\indexname}{索引}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\algorithm}{算法}	
+
+		%%% 定义标题格式，包括title，author，affiliation，email等 %%%%
+\title{智能仓储系统的开发研究}
+% \author{XXX\footnote{电子邮件: XXXXXXXXXXXX@zjut.edu.cn 学号: XXXXXXXXXXXX}\\[2ex]
+% \xiaosihao 浙江工业大学\\[2ex]}
+\author{\xiaosihao 先进计算与机器人研究所}
+%\date{}
+		
+		%%%% 以下部分是正文 %%%%  
+\maketitle
+		
+\tableofcontents
+\newpage
+
+\section{第二章: 等待校准的秤}
+从上一章1.3节的图像可以看出, 称重结果有些不准, 离真实数据偏差较大, 我们需要进一步校准。从图像看出, 用直线拟合效果也能接接受。
+在这一章我们将给出一个可以进行一次校准的秤, 还是在1.3节Calibrate类上进行修改, 加入kb在arduino硬盘上读写的操作, 以及将校准后的结果打印在串口。
+
+秤校准的步骤和1.3节相比基本类似:
+\begin{itemize}
+  \item 1. 获得不准的数据数组;
+  \item 2. 计算拟合系数;
+  \item 3. 输出校准后的结果
+\end{itemize}
+
+\begin{lstlisting}
+class Calibrate {
+union coeffience {
+  unsigned long value_out;
+  byte value_in[4];
+};
+
+private:
+  int pin_SCK, pin_DT, range; 
+  float GapValue;
+  unsigned long k, b;
+  unsigned long x[13];
+  int n;
+
+public:
+  Calibrate();
+
+  void Get_x_array(unsigned long ADS);
+  void Get_kb();
+  unsigned long Output_CalibratedWeight(unsigned long weight);
+  void kb_Initialize();
+
+  void setpin_SCKDT(int p1, int p2);
+  void set_range(int r);
+  unsigned long Output_Weight(unsigned long ADS);
+  unsigned long HX711_Read();
+};
+\end{lstlisting}
+
+相比1.3节添加了两个函数, 修改了一个函数。
+\begin{itemize}
+  \item Get\_kb中加入了写入arduino硬盘的操作;
+  \item Output\_CalibratedWeight输出校准后的读数;
+  \item kb\_Initialize是从arduino硬盘上读取存的k,b值。
+\end{itemize}
+
+\begin{lstlisting}
+void Calibrate::Get_kb(){
+  unsigned long y[n] = {5, 15, 35, 55, 105, 574}, sum_x = 0, sum_y = 0;
+  for (unsigned long& yi:y) 
+      sum_y+=yi;
+  for (unsigned long& x_i:x) 
+    sum_x+=x_i;
+  unsigned long mean_x = sum_x/n, mean_y = sum_y/n;
+  unsigned long k1=0, k2=0;
+  for (int i=0; i<n; ++i) {
+    k1+=x[i]*y[i];
+    k2+=x[i]*x[i];
+  }
+  k = (k1-n*mean_x*mean_y)/(k2-n*mean_x*mean_x);
+  b = mean_y - mean_x * k;
+
+  coeffience k_out;
+  coeffience b_out;
+
+  k_out.value_out = k;
+  b_out.value_out = b;
+
+  for(int i=4; i<8; i++)    //判断是否与上次储存的k相同
+    if (!(EEPROM.read(i)==k_out.value_in[i-4])) {
+      Serial.print("newk:");
+      Serial.println(k);
+      for (int j=i; j<8; j++) 
+        EEPROM.write(j, k_out.value_in[j-4]);
+      break;
+  }
+        
+  for(int i=8; i<12; i++)    //判断是否与上次储存的b相同
+    if (!(EEPROM.read(i)==b_out.value_in[i-8])) {
+      Serial.print("newb:");
+      Serial.println(b);
+      for (int j=8; j<12; j++) 
+        EEPROM.write(j, b_out.value_in[j-8]);
+      break;
+    }
+};
+\end{lstlisting}
+
+在得到k,b后,用共用体k\_out, b\_out存储k, b值, 通过for循环与arduino上对应地址存的k(4~7), b(8~11)值比较, 
+如果不一样则从当前位置写入。
+
+\begin{lstlisting}
+coeffience k_out;
+coeffience b_out;
+
+k_out.value_out = k;
+b_out.value_out = b;
+
+for(int i=4; i<8; i++)    //判断是否与上次储存的k相同
+  if (!(EEPROM.read(i)==k_out.value_in[i-4])) {
+    Serial.print("newk:");
+    Serial.println(k);
+    for (int j=i; j<8; j++) 
+      EEPROM.write(j, k_out.value_in[j-4]);
+    break;
+}
+        
+for(int i=8; i<12; i++)    //判断是否与上次储存的b相同
+  if (!(EEPROM.read(i)==b_out.value_in[i-8])) {
+    Serial.print("newb:");
+    Serial.println(b);
+    for (int j=8; j<12; j++) 
+      EEPROM.write(j, b_out.value_in[j-8]);
+    break;
+  }
+\end{lstlisting}
+
+校准结果是在第一章中Output\_Weight基础上, 加入了系数k,b的作用, 返回校准后的质量。
+\begin{lstlisting}
+unsigned long Calibrate::Output_CalibratedWeight(unsigned long ADS){
+  return k*Output_Weight(ADS)+b;
+};
+\end{lstlisting}
+
+如果之前校准过, 可以通过kb\_Initialize()读取arduino上存的k,b值:
+\begin{lstlisting}
+void PressureSensor::kb_Initialize() {
+  coeffience k_arduino;
+  coeffience b_arduino;
+  
+  for(int i=4; i<8; i++) {
+    k_arduino.value_in[i-4] = EEPROM.read(i);
+    b_arduino.value_in[i-4] = EEPROM.read(i+4);
+  }
+
+  k = k_arduino.value_out;
+  b = b_arduino.value_out;
+  Serial.print("k: ");
+  Serial.println(k);
+  Serial.print("b: ");
+  Serial.println(b);
+};
+\end{lstlisting}
+
+arduino上k对应的地址是4到7, b对应的地址是8到11。首先创建两个共用体k\_arduino, b\_arduino。
+\begin{lstlisting}
+  coeffience k_arduino;
+  coeffience b_arduino; 
+\end{lstlisting}
+
+然后用一个for循环读对应地址上信息存放到对应共用体中。
+\begin{lstlisting}
+  for(int i=4; i<8; i++) {
+    k_arduino.value_in[i-4] = EEPROM.read(i);
+    b_arduino.value_in[i-4] = EEPROM.read(i+4);
+  }  
+\end{lstlisting}
+
+最后是更新变量k,b, 并在串口打印。
+\begin{lstlisting}
+  k = k_arduino.value_out;
+  b = b_arduino.value_out;
+  Serial.print("k: ");
+  Serial.println(k);
+  Serial.print("b: ");
+  Serial.println(b);
+\end{lstlisting}
+
+\subsection{Calibrate.ino}
+\begin{lstlisting}
+#include "Surface.h"
+#include "Calibrate.h"
+
+Surface YL_Surface;
+Calibrate YL_Calibrated;
+
+bool flag=1;
+
+void setup() {
+  Serial.begin(9600);
+  YL_Calibrated.setpin_SCKDT(4, 5);
+  YL_Calibrated.set_range(20);
+  YL_Calibrated.kb_Initialize();
+}
+
+void loop() {
+  if (flag) {
+    YL_Calibrated.Get_x_array(YL_Surface.Get_Surface());
+    YL_Calibrated.Get_kb();
+    flag=0;
+  }
+
+  unsigned long CalibratedWeight = YL_Calibrated.Output_CalibratedWeight(YL_Surface.Get_Surface());
+  Serial.println(CalibratedWeight);
+  delay(1000);
+}
+\end{lstlisting}
+
+主程序分为三部分:
+
+\noindent 第一部分: 导入头文件Calibrate.h, Surface.h, 实例化Surface类. Oled类, flag=1方便主循环调用一次校准;
+\begin{lstlisting}
+  #include "Surface.h"
+  #include "Calibrate.h"
+  
+  Surface YL_Surface;
+  Calibrate YL_Calibrated;
+  
+  bool flag=1;
+\end{lstlisting}  
+
+\noindent 第二部分: 在setup函数里初始化波特率9600, 与Arduino串口通信的波特率保持一致; 
+\begin{lstlisting}
+  Serial.begin(9600);
+\end{lstlisting}
+
+设置与SCK和DT相连的arduino引脚4和5, 设置当前压力传感器的量程20. kb\_Initialize()读取之前存的k,b值:
+\begin{lstlisting}
+  YL_Calibrated.setpin_SCKDT(4, 5);
+  YL_Calibrated.set_range(20);
+  YL_Calibrated.kb_Initialize();
+\end{lstlisting}
+
+\noindent 第三部分: flag为1时进行一次校准,并在校准后flag赋值为0, 避免重复校准。 
+先通过Get\_x\_array获得不准的读数数组, 再通过Get\_kb获得拟合系数, 最后由Output\_CalibratedWeight计算校准后的结果。
+\begin{lstlisting}
+if (flag) {
+  YL_Calibrated.Get_x_array(YL_Surface.Get_Surface());
+  YL_Calibrated.Get_kb();
+  flag=0;
+}
+
+unsigned long CalibratedWeight = YL_Calibrated.Output_CalibratedWeight(YL_Surface.Get_Surface());
+Serial.println(CalibratedWeight);
+delay(1000);
+}
+\end{lstlisting}
+
+\end{document} 
+
